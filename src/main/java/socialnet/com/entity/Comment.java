@@ -1,11 +1,9 @@
 package socialnet.com.entity;
 
-
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
-import java.util.logging.Logger;
+
 
 @Entity(name = "comments")
 @Table(name = "comments")
@@ -19,7 +17,7 @@ public class Comment {
     private Date createdDate;
     @ManyToOne(optional = true, targetEntity = Post.class)
     @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private Post post;
+    private Post post; //post id DTO
 
     {}
 

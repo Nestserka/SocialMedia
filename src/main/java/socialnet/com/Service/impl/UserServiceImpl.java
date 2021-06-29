@@ -1,13 +1,16 @@
 package socialnet.com.Service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import socialnet.com.Repository.UserRepository;
 import socialnet.com.Service.UserService;
+import socialnet.com.dto.UserDTO;
 import socialnet.com.entity.Following;
 import socialnet.com.entity.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -27,7 +30,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(UserDTO userDTO) {
+        Optional<User> userOptional = userRepository.findById(userDTO.getId());
+        User user = null;
+        if (userOptional.isPresent()){
+            user = userOptional.get();
+        }
+        assert user != null;
+//        user.setEmail(userDTO.getEmail());
+//        user.setFirstName(userDTO.getFirstName());
+//        user.setLastName(userDTO.getLastName());
+//        user.setPassword(userDTO.getPassword());
+        BeanUtils.copyProperties(userDTO, user);
         userRepository.save(user);
 
     }

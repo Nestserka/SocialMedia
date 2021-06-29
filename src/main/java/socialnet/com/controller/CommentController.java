@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import socialnet.com.Service.CommentService;
+import socialnet.com.dto.CommentDTO;
 import socialnet.com.entity.Comment;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class CommentController {
         return ResponseEntity.ok(allComments);
     }
     @PostMapping
-    public void createComment(@RequestBody Comment usersComment) {
-      commentService.createComment(usersComment);
+    public void createComment(@RequestBody CommentDTO commentDTO) {
+      commentService.createComment(commentDTO);
 
     }
     @PutMapping

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import socialnet.com.Service.CommentService;
+import socialnet.com.Service.MessageService;
 import socialnet.com.Service.UserService;
+import socialnet.com.dto.UserDTO;
 import socialnet.com.entity.Comment;
 import socialnet.com.entity.Following;
 import socialnet.com.entity.Post;
@@ -15,10 +17,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("public")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    MessageService messageService;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
@@ -30,7 +35,7 @@ public class UserController {
         userService.createUser(user);
     }
     @PutMapping
-    public void updateUser(@RequestBody  User user){ userService.updateUser(user);
+    public void updateUser(@RequestBody UserDTO userDTO) { userService.updateUser(userDTO);
     }
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) { userService.deleteUser(id);

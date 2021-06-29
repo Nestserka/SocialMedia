@@ -4,14 +4,13 @@ import org.springframework.stereotype.Service;
 import socialnet.com.Repository.MessageRepository;
 import socialnet.com.Repository.UserRepository;
 import socialnet.com.Service.MessageService;
-import socialnet.com.entity.Comment;
+import socialnet.com.dto.MessageDTO;
+import socialnet.com.entity.Following;
 import socialnet.com.entity.Message;
 import socialnet.com.entity.User;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
@@ -28,18 +27,36 @@ public class MessageServiceImpl  implements MessageService {
     private final UserRepository userRepository;
 
     @Override
-    public void createMessage(Message message) {
-        message.setCreatedDate((java.sql.Date) new Date());
-      //  message.setUserfrom(message.getUserfrom()); думаю он тоже пройдет автоматом
-        messageRepository.save(message);
+    public void createMessage(MessageDTO messageDTO) {
+        Message messagesent = new Message();
+        Optional<User> userFromOptional = userRepository.findById(messageDTO.getIdFrom());
+        User userFrom = null;
+        if (userFromOptional.isPresent()){
+            userFrom = userFromOptional.get();
+        }
+        assert userFrom != null;
+        Optional<User> userToOptional = userRepository.findById(messageDTO.getIdTo());
+        User userTo = null;
+        if (userToOptional.isPresent()){
+            userTo = userToOptional.get();
+        }
+        assert userTo != null;
+
+        messagesent.setUserTo(userTo);
+        messageRepository.save(messagesent);
 
     }
 
 
     @Override
     public void deleteMessage(Long id) {
-        messageRepository.deleteById(id.intValue());
+        messageRepository.deleteMessageById(id);
 
+    }
+
+    @Override
+    public void updateMessage(Message message) {
+        messageRepository.save(message);
     }
 
     @Override
@@ -49,8 +66,13 @@ public class MessageServiceImpl  implements MessageService {
 
     @Override
     public Message getRecentMessage(Long id) {
-        Optional<Message> message = messageRepository.findById(id.intValue());
+        Optional<Message> message = messageRepository.findById(id);
         Message message1 = message.get();
         return  message1;
+    }
+
+    @Override
+    public List<Message> findAllMessages() {
+        return messageRepository.findAll();
     }
 }

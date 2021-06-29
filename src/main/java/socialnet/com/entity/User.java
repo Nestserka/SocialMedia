@@ -1,5 +1,7 @@
 package socialnet.com.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 
@@ -43,13 +45,13 @@ public class User {
     private String password;
     @Column
     private long subscribers; //qty
-    @OneToMany(cascade=CascadeType.ALL,
-            orphanRemoval=true
-    )
-    private List<Following> following;
+    @OneToMany
+    private List<Following> following; //null
     @Column
     private String email;
-    @OneToMany(mappedBy="userTo")
+    @OneToMany(mappedBy="userTo",
+            cascade = CascadeType.ALL,orphanRemoval=true
+    )
     private Set<Message> messages;
 
     public Long getId() {
@@ -108,24 +110,24 @@ public class User {
         this.email=email;
     }
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages=messages;
-    }
+//    public Set<Message> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(Set<Message> messages) {
+//        this.messages=messages;
+//    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user=(User) o;
-        return subscribers == user.subscribers && id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && password.equals(user.password) && following.equals(user.following) && email.equals(user.email) && messages.equals(user.messages);
+        return subscribers == user.subscribers && id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && password.equals(user.password) && following.equals(user.following) && email.equals(user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, password, subscribers, following, email, messages);
+        return Objects.hash(id, firstName, lastName, password, subscribers, following, email);
     }
 }
 

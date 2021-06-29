@@ -1,7 +1,7 @@
 package socialnet.com.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -24,14 +24,12 @@ public class Message {
     @JoinColumn (referencedColumnName = "id")
     private User userFrom;
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Message that = (Message) o;
-        return id == that.id && createdDate.equals(that.createdDate) && context.equals(that.context) && userTo.equals(that.userTo) && userFrom.equals(that.userFrom);
+        Message message = (Message) o;
+        return id.equals(message.id) && createdDate.equals(message.createdDate) && context.equals(message.context) && userTo.equals(message.userTo) && userFrom.equals(message.userFrom);
     }
 
     @Override
@@ -39,24 +37,11 @@ public class Message {
         return Objects.hash(id, createdDate, context, userTo, userFrom);
     }
 
-    public Message(long id, Date createdDate, String context, User userTo, User userfrom) {
-        this.id = id;
-        this.createdDate = createdDate;
-        this.context = context;
-        this.userTo = userTo;
-        this.userFrom = userfrom;
-    }
-
-
-    public Message(){
-
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -84,15 +69,18 @@ public class Message {
         this.userTo = userTo;
     }
 
-    public User getUserfrom() {
+    public User getUserFrom() {
         return userFrom;
     }
 
-    public void setUserfrom(User userfrom) {
-        this.userFrom = userfrom;
+    public void setUserFrom(User userFrom) {
+        this.userFrom = userFrom;
     }
 
-    //two lines with user каждое сообщение должно хранить двух пользователь
+
+    public Message(){
+
+    }
 
 
 

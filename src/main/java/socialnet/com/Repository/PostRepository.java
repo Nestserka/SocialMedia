@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post,Integer> {
+    void deletePostById(Long id);
     List<Post> findPostByUserOrderById(User user);
     List<Post> findAllByOrderByIdDesc();
     List<Post> findAllByUser_Id(Long id);

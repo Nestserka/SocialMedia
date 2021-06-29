@@ -1,12 +1,15 @@
 package socialnet.com.Service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import socialnet.com.Repository.CommentRepository;
 import socialnet.com.Repository.PostRepository;
 import socialnet.com.Repository.UserRepository;
 import socialnet.com.Service.CommentService;
 import socialnet.com.controller.PostController;
+import socialnet.com.dto.CommentDTO;
 import socialnet.com.entity.Comment;
+import socialnet.com.entity.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,9 +32,16 @@ public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
 
     @Override
-    public void createComment(Comment usersComment) {
-        commentRepository.save(usersComment);
-    }
+    public void createComment(CommentDTO commentDTO) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentDTO.getId());
+        Comment comment = null;
+        if (commentOptional.isPresent()) {
+            comment = commentOptional.get();
+        }
+            assert comment != null;
+            BeanUtils.copyProperties(commentDTO, comment);
+            commentRepository.save(comment);
+        }
 
     @Override
     public void updateComment(Comment usersComment) {

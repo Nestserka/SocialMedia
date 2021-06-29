@@ -1,11 +1,12 @@
 package socialnet.com.Service;
 
+import socialnet.com.dto.CommentDTO;
 import socialnet.com.entity.Comment;
 
 import java.util.List;
 
 public interface CommentService  {
-    void createComment(Comment usersComment);
+    void createComment(CommentDTO commentDTO);
     void updateComment(Comment usersComment);
     void deleteComment(Long id);
 

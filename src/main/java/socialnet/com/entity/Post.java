@@ -2,6 +2,7 @@ package socialnet.com.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -16,25 +17,13 @@ public class Post {
     private String context;
     @Column
     private int likes;
-    @Column(name="createdDate", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "createdDate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @ManyToOne
-    @JoinColumn(name = "user1",referencedColumnName = "id")
+    @JoinColumn(name = "user1", referencedColumnName = "id")
     private User user;
-     //base64 -- формат в каком картинку нужно передавать уже в самом ответе. а здесь нужно указать только путь. нужно генерировать уникальное имя uuid . пользовать в пост методе загрузил картинку
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Post post= (Post) o;
-        return likes == post.likes && id.equals(post.id) &&  context.equals(post.context) && createdDate.equals(post.createdDate) && user.equals(post.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, context, likes, createdDate, user);
-    }
+    @OneToMany
+    private List<Comment> comments;
 
     public Long getId() {
         return id;
@@ -76,5 +65,25 @@ public class Post {
         this.user = user;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return likes == post.likes && id.equals(post.id) && context.equals(post.context) && createdDate.equals(post.createdDate) && user.equals(post.user) && comments.equals(post.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, context, likes, createdDate, user, comments);
+    }
 
 }
