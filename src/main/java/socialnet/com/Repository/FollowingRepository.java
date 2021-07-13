@@ -11,5 +11,4 @@ import java.util.List;
 public interface FollowingRepository extends JpaRepository<Following,Integer> {
 //  List<Following> saveFollowing (Following following);
     void deleteFollowingById(Long id);
-
 }

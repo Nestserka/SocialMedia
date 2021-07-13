@@ -24,6 +24,21 @@ public class Post {
     private User user;
     @OneToMany
     private List<Comment> comments;
+    @OneToOne
+    private FileInfo fileInfo;
+
+//    @Column(nullable = true, length = 64)
+//    private String photos;
+//
+//    public String getPhotos() {
+//        return photos;
+//    }
+//
+//    public void setPhotos(String photos) {
+//        this.photos = photos;
+//    }
+
+
 
     public Long getId() {
         return id;
@@ -71,6 +86,14 @@ public class Post {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public FileInfo getFileInfo() {
+        return fileInfo;
+    }
+
+    public void setFileInfo(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
     }
 
     @Override

@@ -4,7 +4,17 @@ import java.util.Objects;
 
 public class CommentDTO {
     private Long id;
-    private Long PostId;
+    private Long PostId; //postId
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    private String text;
 
 
     @Override

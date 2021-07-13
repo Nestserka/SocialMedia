@@ -9,9 +9,11 @@ import socialnet.com.Service.CommentService;
 import socialnet.com.controller.PostController;
 import socialnet.com.dto.CommentDTO;
 import socialnet.com.entity.Comment;
+import socialnet.com.entity.Post;
 import socialnet.com.entity.User;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -33,13 +35,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void createComment(CommentDTO commentDTO) {
-        Optional<Comment> commentOptional = commentRepository.findById(commentDTO.getId());
-        Comment comment = null;
-        if (commentOptional.isPresent()) {
-            comment = commentOptional.get();
+        Comment comment = new Comment();
+        Optional<Post> postOptional = postRepository.findById(commentDTO.getPostId());
+        Post post = null;
+        if (postOptional.isPresent()) {
+            post = postOptional.get();
         }
-            assert comment != null;
-            BeanUtils.copyProperties(commentDTO, comment);
+            assert post != null;
+        comment.setPost(post);
+        comment.setText(commentDTO.getText());
+        comment.setCreatedDate(new Date());
             commentRepository.save(comment);
         }
 

@@ -29,9 +29,10 @@ public class FollowingController {
     public void addNewFollowing(@RequestBody FollowingDTO followingDTO) { //prinimat' following
         followingService.saveFollowing(followingDTO);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public void deleteFollowing(@PathVariable Long id) {
         followingService.deleteFollowing(id);
-    }
+    } //followingDTO (change to it)
+
 
 }

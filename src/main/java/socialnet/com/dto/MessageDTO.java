@@ -6,6 +6,16 @@ public class MessageDTO {
     private  Long idTo;
     private Long idFrom;
 
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    private String context;
+
 
     @Override
     public boolean equals(Object o) {

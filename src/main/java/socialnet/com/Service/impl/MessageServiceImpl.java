@@ -1,5 +1,6 @@
 package socialnet.com.Service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import socialnet.com.Repository.MessageRepository;
 import socialnet.com.Repository.UserRepository;
@@ -28,7 +29,7 @@ public class MessageServiceImpl  implements MessageService {
 
     @Override
     public void createMessage(MessageDTO messageDTO) {
-        Message messagesent = new Message();
+        Message messageSent = new Message();
         Optional<User> userFromOptional = userRepository.findById(messageDTO.getIdFrom());
         User userFrom = null;
         if (userFromOptional.isPresent()){
@@ -42,8 +43,10 @@ public class MessageServiceImpl  implements MessageService {
         }
         assert userTo != null;
 
-        messagesent.setUserTo(userTo);
-        messageRepository.save(messagesent);
+        messageSent.setUserTo(userTo);
+        messageSent.setUserFrom(userFrom);
+        messageSent.setContext(messageDTO.getContext());
+        messageRepository.save(messageSent);
 
     }
 

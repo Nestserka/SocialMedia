@@ -6,9 +6,12 @@ import socialnet.com.Repository.UserRepository;
 import socialnet.com.Service.UserService;
 import socialnet.com.dto.UserDTO;
 import socialnet.com.entity.Following;
+import socialnet.com.entity.Message;
 import socialnet.com.entity.User;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -24,10 +27,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
-        userRepository.save(user);
+    public void createUser(UserDTO userDTO) {
+        User newUser = new User();
+      //  List <Following> followingList = new ArrayList<>();
+        newUser.setEmail(userDTO.getEmail());
+        newUser.setLastName(userDTO.getLastName());
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setPassword(userDTO.getPassword());
+        newUser.setFollowing(new ArrayList<Following>());
+        newUser.setMessages(new HashSet<Message>());
+        userRepository.save(newUser);
+        }
 
-    }
 
     @Override
     public void updateUser(UserDTO userDTO) {

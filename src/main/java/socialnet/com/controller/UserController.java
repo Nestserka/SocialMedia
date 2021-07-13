@@ -31,9 +31,9 @@ public class UserController {
         return ResponseEntity.ok(allusers);
     }
     @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
-    }
+    public void createUser(@RequestBody UserDTO userDTO) {
+        userService.createUser(userDTO);
+    } //передалать в ДТО
     @PutMapping
     public void updateUser(@RequestBody UserDTO userDTO) { userService.updateUser(userDTO);
     }

@@ -8,7 +8,7 @@ import socialnet.com.entity.User;
 import java.util.List;
 
 public interface UserService {
-    void createUser(User user);
+    void createUser(UserDTO userDTO);
     void updateUser(UserDTO userDTO);
     void deleteUser(Long id);
     //void addFollowing (User following);

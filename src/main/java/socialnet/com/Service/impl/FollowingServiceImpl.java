@@ -34,6 +34,7 @@ public class FollowingServiceImpl  implements FollowingService {
         return followingRepository.findAll();
     }
 
+
     @Override
     public void deleteFollowing(Long id) {
         followingRepository.deleteFollowingById(id);
@@ -61,7 +62,7 @@ public class FollowingServiceImpl  implements FollowingService {
         List <Following> followings = userFrom.getFollowing();
         if (followings != null && followings.size() > 0) {
             followings.add(followingUser);
-        }
+        }  //in the list of followings, i have to find following to refer to userTo and delete from there
         else  {
             followings = new ArrayList<>();
             followings.add(followingUser);
@@ -70,10 +71,4 @@ public class FollowingServiceImpl  implements FollowingService {
         userFrom.setFollowing(followings);
         userRepository.save(userFrom);
     }
-
-//    @Override
-//    public List<Following> saveFollowing(Long id) {
-//        return followingRepository.saveFollowing(id);
-//    }
-
 }
